@@ -1,8 +1,11 @@
 import BenefitCard from "@/components/BenefitCard";
 import { Navbar } from "@/components/Navbar";
+import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { Button } from "@/components/ui/button";
 import { Benefit } from "@/models/benefit";
 import { motion } from "framer-motion";
+import { useAnimation, useInView } from "motion/react";
+import { useRef, useEffect } from "react";
 
 const benefits: Benefit[] = [
   {
@@ -152,17 +155,87 @@ const benefits: Benefit[] = [
     ),
   },
 ];
-
+const testimonials = [
+  {
+    quote:
+      "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
+    name: "Sarah Chen",
+    designation: "Product Manager at TechFlow",
+    src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    quote:
+      "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
+    name: "Michael Rodriguez",
+    designation: "CTO at InnovateSphere",
+    src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    quote:
+      "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
+    name: "Emily Watson",
+    designation: "Operations Director at CloudScale",
+    src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    quote:
+      "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
+    name: "James Kim",
+    designation: "Engineering Lead at DataPro",
+    src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    quote:
+      "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
+    name: "Lisa Thompson",
+    designation: "VP of Technology at FutureNet",
+    src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
 const HomePage = () => {
+  const controls = useAnimation();
+  const controlsTestimonies = useAnimation();
+  const ref = useRef(null);
+  const refTestimonies = useRef(null);
+  const isInView = useInView(ref, { margin: "-50px", once: true });
+  const isInViewTestimonies = useInView(refTestimonies, { margin: "-50px", once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [isInView, controls]);
+  useEffect(() => {
+    if (isInViewTestimonies) {
+      controlsTestimonies.start("visible");
+    } else {
+      controlsTestimonies.start("hidden");
+    }
+  }, [isInViewTestimonies, controlsTestimonies]);
+
   return (
     <>
-      <div className="flex flex-col w-screen h-screen justify-center">
-        <div className="w-full px-7 border-b-2 fixed top-0 left-0 z-10">
+      <div
+        className="flex flex-col w-screen min-h-screen"
+        style={{
+          backgroundImage: `
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.1), white 100%),
+            linear-gradient(to left, rgba(255, 255, 255, 0.5), white 100%),
+            url('banner1.jpeg')
+          `,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="w-full border-b-2 fixed top-0 left-0 z-10">
           <Navbar />
         </div>
-        <div className="px-5 w-2/3 m-auto">
+        <div className="w-4/6 my-auto pl-32">
           <motion.h1
-            className="text-center text-3xl font-bold tracking-tight lg:text-5xl lg:leading-snug"
+            className="text-3xl font-bold tracking-tight lg:text-6xl lg:leading-snug"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -171,7 +244,16 @@ const HomePage = () => {
             <span className="text-yellow-500">Talent</span> Meets{" "}
             <span className="text-lime-500">Opportunity</span>
           </motion.h1>
-          <div className="flex justify-center gap-7 mt-8">
+          <motion.h2
+            className="text-md tracking-tight lg:text-lg lg:leading-snug mt-5 w-2/3 text-gray-700"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            Use AI tools to identify exceptional talent or job vacancies, giving
+            you full control over the process.
+          </motion.h2>
+          <div className="flex gap-7 mt-8">
             <motion.div
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -198,14 +280,24 @@ const HomePage = () => {
         </div>
       </div>
       <div className="mt-2 flex flex-col justify-center">
-        <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight text-center mb-12">
+        <motion.h2
+          ref={ref}
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0, y: -20 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-3xl font-semibold tracking-tight text-center mb-12"
+        >
           Why Choose Seek
           <label htmlFor="" className="text-lime-500">
             R
           </label>
           ?
-        </h2>
-        <div className=" w-5/6 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        </motion.h2>
+        <div className=" w-4/6 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
             <BenefitCard
               key={index}
@@ -215,6 +307,24 @@ const HomePage = () => {
               svgIcon={benefit.svgIcon}
             />
           ))}
+        </div>
+      </div>
+      <div className="mt-5 flex flex-col justify-center">
+        <motion.h2
+          ref={refTestimonies}
+          initial="hidden"
+          animate={controlsTestimonies}
+          variants={{
+            hidden: { opacity: 0, y: -20 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-3xl font-semibold tracking-tight text-center mb-12"
+        >
+          Testimonies
+        </motion.h2>
+        <div>
+          <AnimatedTestimonials testimonials={testimonials}/>
         </div>
       </div>
     </>

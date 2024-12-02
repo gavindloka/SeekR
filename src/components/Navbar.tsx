@@ -79,7 +79,7 @@ export function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <NavigationMenu className="flex justify-between items-center bg-white py-3">
+    <NavigationMenu className="flex justify-between items-center bg-white py-3 px-7">
       <NavigationMenuList>
         <NavigationMenuItem >
           <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight mr-4 cursor-pointer" onClick={()=>navigate("/")}>
