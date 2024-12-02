@@ -3,6 +3,7 @@
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { FaArrowRight } from "react-icons/fa6";
 
 type Testimonial = {
   quote: string;
@@ -117,7 +118,7 @@ export const AnimatedTestimonials = ({
             <p className="text-sm text-gray-500 dark:text-neutral-500">
               {testimonials[active].designation}
             </p>
-            <motion.p className="text-lg text-gray-500 mt-8 dark:text-neutral-300">
+            <motion.p className="text-lg text-gray-500 mt-4 mb-5 dark:text-neutral-300">
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -144,18 +145,14 @@ export const AnimatedTestimonials = ({
             </motion.p>
           </motion.div>
           <div className="flex gap-4 pt-12 md:pt-0">
-            <button
+            <IconArrowLeft
               onClick={handlePrev}
-              className="h-7 w-7 rounded-full bg-gray-100 dark:bg-neutral-800 flex items-center justify-center group/button"
-            >
-              <IconArrowLeft className="h-5 w-5 text-black dark:text-neutral-400 group-hover/button:rotate-12 transition-transform duration-300" />
-            </button>
-            <button
+              className="h-10 w-10 p-2 text-lime-500 bg-lime-200 text-2xl rounded-xl hover:rotate-12 transition-transform duration-300 cursor-pointer"
+            />
+            <IconArrowRight
               onClick={handleNext}
-              className="h-7 w-7 rounded-full bg-gray-100 dark:bg-neutral-800 flex items-center justify-center group/button"
-            >
-              <IconArrowRight className="h-5 w-5 text-black dark:text-neutral-400 group-hover/button:-rotate-12 transition-transform duration-300" />
-            </button>
+              className="h-10 w-10 p-2 text-lime-500 bg-lime-200 text-2xl rounded-xl hover:-rotate-12 transition-transform duration-300 cursor-pointer"
+            />
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import BenefitCard from "@/components/BenefitCard";
+import Footer from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { Button } from "@/components/ui/button";
@@ -158,38 +159,45 @@ const benefits: Benefit[] = [
 const testimonials = [
   {
     quote:
-      "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
-    name: "Sarah Chen",
-    designation: "Product Manager at TechFlow",
-    src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Seekr has truly transformed how I work as a freelance designer. Previously, I struggled to find suitable clients, but this platform has connected me with many interesting projects.",
+    name: "Sarah Wijaya",
+    designation: "Graphic Designer",
+    src: "rani.jpeg",
   },
   {
     quote:
-      "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
-    name: "Michael Rodriguez",
-    designation: "CTO at InnovateSphere",
-    src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "As a consultant focused on the F&B and retail industries, it's vital to get clients that match my expertise. Seekr's AI doesn't just understand my skill set, but also my specific industry experience.",
+    name: "Budi Santoso",
+    designation: "Digital Marketer  ",
+    src: "ricky.jpeg",
   },
   {
     quote:
-      "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
-    name: "Emily Watson",
-    designation: "Operations Director at CloudScale",
-    src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Finding freelancers who understand the edtech world isn't easy. But Seekr's AI successfully matched us with instructional designers and content developers perfect for our learning platform.",
+    name: "David Tanuwijaya",
+    designation: "Founder of Healthy Bowl",
+    src: "morgan.jpeg",
   },
   {
     quote:
-      "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
-    name: "James Kim",
-    designation: "Engineering Lead at DataPro",
-    src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Initially, I struggled to manage the online store alone. Thanks to Seekr, I found the right content writer and product photographer for my fashion business.",
+    name: "Linda Kusuma",
+    designation: "Owner of Modest Signature",
+    src: "floren.jpeg",
   },
   {
     quote:
-      "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
-    name: "Lisa Thompson",
-    designation: "VP of Technology at FutureNet",
-    src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "We used to spend days screening freelancers and were often disappointed with the results. Now, Seekr's AI does all that heavy lifting. Its matching system is very accurate in understanding our briefs and finding the right freelancers.",
+    name: "Michael Wijaya",
+    designation: "CEO TechSolution Indonesia",
+    src: "brandy.jpeg",
+  },
+  {
+    quote:
+      "What makes Seekr different is its ability to understand style and creativity. Its AI analyzes my video portfolio and matches me with clients seeking similar aesthetics.",
+    name: "John Budi",
+    designation: "Video Editor & Motion Designer",
+    src: "clement.jpeg",
   },
 ];
 const HomePage = () => {
@@ -198,7 +206,10 @@ const HomePage = () => {
   const ref = useRef(null);
   const refTestimonies = useRef(null);
   const isInView = useInView(ref, { margin: "-50px", once: true });
-  const isInViewTestimonies = useInView(refTestimonies, { margin: "-50px", once: true });
+  const isInViewTestimonies = useInView(refTestimonies, {
+    margin: "-50px",
+    once: true,
+  });
 
   useEffect(() => {
     if (isInView) {
@@ -309,7 +320,7 @@ const HomePage = () => {
           ))}
         </div>
       </div>
-      <div className="mt-5 flex flex-col justify-center">
+      <div className="mt-14 mb-20 flex flex-col justify-center">
         <motion.h2
           ref={refTestimonies}
           initial="hidden"
@@ -318,14 +329,26 @@ const HomePage = () => {
             hidden: { opacity: 0, y: -20 },
             visible: { opacity: 1, y: 0 },
           }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-3xl font-semibold tracking-tight text-center mb-12"
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="text-3xl font-semibold tracking-tight text-center"
         >
           Testimonies
         </motion.h2>
-        <div>
-          <AnimatedTestimonials testimonials={testimonials}/>
-        </div>
+        <motion.div
+          ref={refTestimonies}
+          initial="hidden"
+          animate={controlsTestimonies}
+          variants={{
+            hidden: { opacity: 0, y: -20 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        >
+          <AnimatedTestimonials testimonials={testimonials} />
+        </motion.div>
+      </div>
+      <div className="relative">
+        <Footer/>
       </div>
     </>
   );
