@@ -7,8 +7,8 @@ import { Benefit } from "@/models/benefit";
 import { motion } from "framer-motion";
 import { useAnimation, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
-import { auth,db } from "@/firebase/firebase";
-import { doc, getDoc } from "firebase/firestore"
+import { auth, db } from "@/firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { User } from "@/models/user";
 
 const benefits: Benefit[] = [
@@ -204,7 +204,10 @@ const testimonials = [
   },
 ];
 const HomePage = () => {
-  const [authUser, setAuthUser] = useState<User|null>(null)
+  const [authUser, setAuthUser] = useState<User | null>(null);
+
+
+
   const controls = useAnimation();
   const controlsTestimonies = useAnimation();
   const ref = useRef(null);
@@ -215,27 +218,25 @@ const HomePage = () => {
     once: true,
   });
 
-  // const fetchUserData = async()=>{
-  //   auth.onAuthStateChanged(async(user)=>{
-  //     if (user?.uid) {
-  //       const docRef = doc(db, "Users", user.uid);
-  //       const docSnap = await getDoc(docRef);
-  //       if (docSnap.exists()) {
-  //         setAuthUser(docSnap.data() as User);
-  //         console.log(docSnap.data());
-  //       } else {
-  //         console.log("User data not found");
-  //       }
-  //     } else {
-  //       console.log("User is not authenticated");
-  //     }
-  //   })
-  // // }
-  // useEffect(()=>{
-  //   fetchUserData();
-  // },[])
-
-
+  const fetchUserData = async () => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user?.uid) {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setAuthUser(docSnap.data() as User);
+          console.log(docSnap.data());
+        } else {
+          console.log("User data not found");
+        }
+      } else {
+        console.log("User is not authenticated");
+      }
+    });
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     if (isInView) {
@@ -291,28 +292,55 @@ const HomePage = () => {
             you full control over the process.
           </motion.h2>
           <div className="flex gap-7 mt-8">
-            <motion.div
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-            >
-              <Button
-                className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500  transition-all duration-300 transform hover:scale-105"
-                variant="default"
-              >
-                Browse Jobs
-              </Button>
-            </motion.div>
+            {authUser === null ? (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, y: -30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                >
+                  <Button
+                    className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105"
+                    variant="default"
+                  >
+                    Browse Jobs
+                  </Button>
+                </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
-            >
-              <Button className="bg-white w-36 h-12 text-lg  border-lime-500 rounded-xl text-lime-500 hover:bg-lime-500 hover:text-white hover:border-lime-400 transition-all duration-300 transform hover:scale-105">
-                Post a Job
-              </Button>
-            </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: -30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+                >
+                  <Button className="bg-white w-36 h-12 text-lg border-lime-500 rounded-xl text-lime-500 hover:bg-lime-500 hover:text-white hover:border-lime-400 transition-all duration-300 transform hover:scale-105">
+                    Post a Job
+                  </Button>
+                </motion.div>
+              </>
+            ) : authUser?.role === "freelancer" ? (
+              <motion.div
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+              >
+                <Button
+                  className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105"
+                  variant="default"
+                >
+                  Browse Jobs
+                </Button>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+              >
+                <Button className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105">
+                  Post a Job
+                </Button>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
@@ -374,7 +402,7 @@ const HomePage = () => {
         </motion.div>
       </div>
       <div className="relative">
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
