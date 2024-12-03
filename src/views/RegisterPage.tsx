@@ -106,8 +106,6 @@ const RegisterPage = () => {
 
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  const [focused, setFocused] = useState(false);
-
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
     try {

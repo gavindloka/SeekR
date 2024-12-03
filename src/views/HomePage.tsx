@@ -271,9 +271,9 @@ const HomePage = () => {
         <div className="w-full border-b-2 fixed top-0 left-0 z-10">
           <Navbar />
         </div>
-        <div className="w-4/6 my-auto pl-32">
+        <div className="w-4/6 my-auto lg:pl-32 xs:mx-auto lg:mx-0 xs:pl-0">
           <motion.h1
-            className="text-3xl font-bold tracking-tight lg:text-6xl lg:leading-snug"
+            className="text-3xl font-bold tracking-tight xs:text-center lg:text-left lg:text-6xl lg:leading-snug"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -283,7 +283,7 @@ const HomePage = () => {
             <span className="text-lime-500">Opportunity</span>
           </motion.h1>
           <motion.h2
-            className="text-md tracking-tight lg:text-lg lg:leading-snug mt-5 w-2/3 text-gray-700"
+            className="text-md tracking-tight lg:text-lg xs:text-center xs:mx-auto lg:mx-0 lg:text-left lg:leading-snug mt-5 w-2/3 text-gray-700"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -291,7 +291,7 @@ const HomePage = () => {
             Use AI tools to identify exceptional talent or job vacancies, giving
             you full control over the process.
           </motion.h2>
-          <div className="flex gap-7 mt-8">
+          <div className="flex gap-7 mt-8 xs:justify-center lg:justify-start">
             {authUser === null ? (
               <>
                 <motion.div
