@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Benefit } from "@/models/benefit";
 import { motion } from "framer-motion";
 import { useAnimation, useInView } from "motion/react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { auth,db } from "@/firebase/firebase";
+import { doc, getDoc } from "firebase/firestore"
+import { User } from "@/models/user";
 
 const benefits: Benefit[] = [
   {
@@ -201,6 +204,7 @@ const testimonials = [
   },
 ];
 const HomePage = () => {
+  const [authUser, setAuthUser] = useState<User|null>(null)
   const controls = useAnimation();
   const controlsTestimonies = useAnimation();
   const ref = useRef(null);
@@ -210,6 +214,28 @@ const HomePage = () => {
     margin: "-50px",
     once: true,
   });
+
+  // const fetchUserData = async()=>{
+  //   auth.onAuthStateChanged(async(user)=>{
+  //     if (user?.uid) {
+  //       const docRef = doc(db, "Users", user.uid);
+  //       const docSnap = await getDoc(docRef);
+  //       if (docSnap.exists()) {
+  //         setAuthUser(docSnap.data() as User);
+  //         console.log(docSnap.data());
+  //       } else {
+  //         console.log("User data not found");
+  //       }
+  //     } else {
+  //       console.log("User is not authenticated");
+  //     }
+  //   })
+  // // }
+  // useEffect(()=>{
+  //   fetchUserData();
+  // },[])
+
+
 
   useEffect(() => {
     if (isInView) {

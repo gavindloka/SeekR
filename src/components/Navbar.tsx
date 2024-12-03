@@ -13,9 +13,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router";
+import { auth, db } from "@/firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { User } from "@/models/user";
+import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
-
-
 
 const freelancerComponents: {
   title: string;
@@ -25,14 +27,12 @@ const freelancerComponents: {
   {
     title: "Create Profile",
     href: "/docs/freelancers/create-profile",
-    description:
-      "A form where freelancers can create their profile.",
+    description: "A form where freelancers can create their profile.",
   },
   {
     title: "Submit Proposal",
     href: "/docs/freelancers/submit-proposal",
-    description:
-      "A simple form to submit proposals to job listings.",
+    description: "A simple form to submit proposals to job listings.",
   },
   {
     title: "Portfolio",
@@ -43,17 +43,19 @@ const freelancerComponents: {
   {
     title: "My Jobs",
     href: "/docs/freelancers/jobs-dashboard",
-    description:
-      "A dashboard where freelancers can track their jobs.",
+    description: "A dashboard where freelancers can track their jobs.",
   },
 ];
 
-const employerComponents: { title: string; href: string; description: string }[] = [
+const employerComponents: {
+  title: string;
+  href: string;
+  description: string;
+}[] = [
   {
     title: "Post a Job",
     href: "/docs/employers/post-job",
-    description:
-      "A simple form for employers to post jobs.",
+    description: "A simple form for employers to post jobs.",
   },
   {
     title: "Browse Freelancers",
@@ -64,8 +66,7 @@ const employerComponents: { title: string; href: string; description: string }[]
   {
     title: "View Freelancer Profiles",
     href: "/docs/employers/view-freelancer-profiles",
-    description:
-      "Employers can view detailed freelancer profiles.",
+    description: "Employers can view detailed freelancer profiles.",
   },
   {
     title: "Manage Job Listings",
@@ -77,13 +78,52 @@ const employerComponents: { title: string; href: string; description: string }[]
 
 export function Navbar() {
   const navigate = useNavigate();
+  const [authUser, setAuthUser] = useState<User | null>(null);
+  const fetchUserData = async () => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user?.uid) {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setAuthUser(docSnap.data() as User);
+          console.log(docSnap.data());
+        } else {
+          console.log("User data not found");
+        }
+      } else {
+        console.log("User is not authenticated");
+      }
+    });
+  };
 
+  const logout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+  
+  React.useEffect(() => {
+    fetchUserData();
+  }, [auth]);
   return (
     <NavigationMenu className="flex justify-between items-center bg-white py-3 px-7">
       <NavigationMenuList>
-        <NavigationMenuItem >
-          <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight mr-4 cursor-pointer" onClick={()=>navigate("/")}>
-            Seek<label className=" text-lime-500 cursor-pointer" onClick={()=>navigate("/")}>R</label>
+        <NavigationMenuItem>
+          <h1
+            className="scroll-m-20 text-2xl font-semibold tracking-tight mr-4 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            Seek
+            <label
+              className=" text-lime-500 cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              R
+            </label>
           </h1>
         </NavigationMenuItem>
         <NavigationMenuItem className="xs:hidden sm:block">
@@ -119,10 +159,26 @@ export function Navbar() {
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>
-      <NavigationMenuList>
-        <Button variant="ghost" className=" bg-white border-none">Log in</Button>
-        <Button className="bg-lime-500">Register</Button>
-      </NavigationMenuList>
+
+      {authUser ? (
+        <NavigationMenuList>
+          <div>
+            Hello, <span className="mr-4 font-bold">{authUser.name}</span>
+          </div>
+          <Button variant="ghost" className="bg-white border-none" onClick={()=>logout()}>
+            Log out
+          </Button>
+        </NavigationMenuList>
+      ) : (
+        <NavigationMenuList>
+          <Button variant="ghost" className=" bg-white border-none" onClick={() => navigate("/login")} >
+            Log in
+          </Button>
+          <Button className="bg-lime-500" onClick={() => navigate("/register")}>
+            Register
+          </Button>
+        </NavigationMenuList>
+      )}
     </NavigationMenu>
   );
 }
