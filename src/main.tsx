@@ -6,6 +6,7 @@ import RegisterPage from './views/RegisterPage.tsx'
 import React from 'react'
 import HomePage from './views/HomePage.tsx'
 import { Toaster } from './components/ui/toaster.tsx'
+import PostJobPage from './views/PostJobPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path:"/register",
     element:<RegisterPage/>
+  },
+  {
+    path:"/post",
+    element:<PostJobPage/>
   }
 ])
 

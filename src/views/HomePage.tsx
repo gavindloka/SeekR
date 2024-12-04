@@ -10,6 +10,7 @@ import { useRef, useEffect, useState } from "react";
 import { auth, db } from "@/firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { User } from "@/models/user";
+import { useNavigate } from "react-router";
 
 const benefits: Benefit[] = [
   {
@@ -204,10 +205,8 @@ const testimonials = [
   },
 ];
 const HomePage = () => {
+  const navigate = useNavigate();
   const [authUser, setAuthUser] = useState<User | null>(null);
-
-
-
   const controls = useAnimation();
   const controlsTestimonies = useAnimation();
   const ref = useRef(null);
@@ -301,7 +300,6 @@ const HomePage = () => {
                 >
                   <Button
                     className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105"
-                    variant="default"
                   >
                     Browse Jobs
                   </Button>
@@ -312,7 +310,7 @@ const HomePage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
                 >
-                  <Button className="bg-white w-36 h-12 text-lg border-lime-500 rounded-xl text-lime-500 hover:bg-lime-500 hover:text-white hover:border-lime-400 transition-all duration-300 transform hover:scale-105">
+                  <Button  variant="secondary" className="rounded-xl w-36 h-12 text-lg text-lime-500 hover:border-lime-500  transition-all duration-300 transform hover:scale-105">
                     Post a Job
                   </Button>
                 </motion.div>
@@ -336,7 +334,8 @@ const HomePage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
               >
-                <Button className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105">
+                <Button className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105" 
+                onClick={()=>navigate("/post")}>
                   Post a Job
                 </Button>
               </motion.div>

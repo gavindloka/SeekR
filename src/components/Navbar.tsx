@@ -163,7 +163,7 @@ export function Navbar() {
       {authUser ? (
         <NavigationMenuList>
           <div>
-            Hello, <span className="mr-4 font-bold">{authUser.name}</span>
+            Hello, <span className="mr-4 font-bold text-lime-500">{authUser.name}</span>
           </div>
           <Button variant="outline" className="hover:border-lime-500 hover:text-lime-500" onClick={()=>logout()}>
             Log out
