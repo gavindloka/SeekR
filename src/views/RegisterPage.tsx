@@ -38,6 +38,7 @@ const RegisterPage = () => {
     setEmail("");
     setPhone("");
     setPassword("");
+    setRole("")
   };
 
   const skills = [
@@ -169,6 +170,7 @@ const RegisterPage = () => {
                 required
                 className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => setName(e.target.value)}
+                value={name}
               />
             </div>
             <div>
@@ -186,6 +188,7 @@ const RegisterPage = () => {
                 required
                 className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => setAge(Number(e.target.value))}
+                value={age}
               />
             </div>
             <div>
@@ -202,6 +205,7 @@ const RegisterPage = () => {
                 required
                 className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
             </div>
 
@@ -219,6 +223,7 @@ const RegisterPage = () => {
                 required
                 className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => setPhone(e.target.value)}
+                value={phone}
               />
             </div>
 
@@ -236,6 +241,7 @@ const RegisterPage = () => {
                 required
                 className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
             </div>
 
@@ -276,7 +282,7 @@ const RegisterPage = () => {
             </Button>
           </form>
         )}
-        {!showForm && (
+        {role==="freelancer"&&!showForm && (
           <>
             <div className="flex flex-col justify-center">
               <motion.h1
@@ -293,22 +299,45 @@ const RegisterPage = () => {
                   const skillsTitles = newValue.map((item) => item.title);
                   setSelectedSkills(skillsTitles);
                 }}
-                className="max-w-[500px] min-w-[500px] mx-auto border-lime-500 focus:border-lime-500"
+                
                   multiple
                   id="tags-outlined"
                   options={skills}
                   getOptionLabel={(option) => option.title}
                   filterSelectedOptions
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: '#16a34a', // Set border color to the specified green
+                        borderRadius: '12px', 
+                        borderWidth:'1px',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#16a34a', 
+                        borderWidth:'2px',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#16a34a', 
+                        borderWidth:'2px',
+                      },
+                    },
+                    maxWidth: 500,
+                    minWidth: 500,
+                    margin: '0 auto',
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      placeholder="Pleace Input Your Skills"
+                      placeholder="Please Input Your Skills"
                     />
                   )}
                 />
               </div>
-              <div className="mt-4 mx-auto">
-                  <Button className=" bg-lime-500" onClick={handleRegister}>
+              <div className="mt-8 flex justify-center gap-8">
+                  <Button variant="secondary" className="w-1/4 text-lime-500 hover:border-lime-500 hover:text-green-500" onClick={()=>setShowForm(true)}>
+                    Back
+                  </Button>
+                  <Button className=" bg-lime-500 w-1/4 hover:bg-lime-500" onClick={handleRegister}>
                     Submit
                   </Button>
               </div>
