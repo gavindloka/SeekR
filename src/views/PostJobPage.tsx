@@ -17,7 +17,7 @@ import Stepper from "@mui/material/Stepper";
 import TextField from "@mui/material/TextField/TextField";
 import Typography from "@mui/material/Typography";
 import React, { FormEvent, useState } from "react";
-import { db, storage } from "@/firebase/firebase";  
+import { db } from "@/firebase/firebase";
 import { toast } from "@/hooks/use-toast";
 import { setDoc, doc, addDoc, collection } from "firebase/firestore";
 import { useNavigate } from "react-router";
@@ -94,7 +94,7 @@ const PostJobPage = () => {
 
   const navigate = useNavigate();
 
-  const handleNext = async (event:FormEvent) => {
+  const handleNext = async (event: FormEvent) => {
     if (activeStep === steps.length - 1) {
       await handlePostJob(event);
     } else {
@@ -115,53 +115,71 @@ const PostJobPage = () => {
   const handleLangChange = (event: any, newValue: string | null) => {
     setLanguage(newValue || "");
   };
-
-  const handlePostJob = async (e:FormEvent)=>{
+  function generateRandomString(length:number) {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      randomString += charset[randomIndex];
+    }
+    return randomString;
+  }
+  
+  const handlePostJob = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      // let imageUrl = "";
-      // if (image) {
-      //   const storageRef = ref(storage, `job-images/${image.name}`);
-      //   const uploadTask = uploadBytesResumable(storageRef, image);
+      let imageUrl = "";
+      if (image) {
 
-      //   await uploadTask;
-
-      //   imageUrl = await getDownloadURL(storageRef);
-      // }
+        const randomPrefix = generateRandomString(10);
+        const data = new FormData();
+        const currentDate = Date.now();
+        const imageName = currentDate + "_" + randomPrefix + "_" + image.name;
+        data.append("file",image, imageName)
+        data.append("upload_preset","gavindloka")
+        data.append("cloud_name","dsscbt1sr")
+       const res= await fetch("https://api.cloudinary.com/v1_1/dsscbt1sr/image/upload",{
+          method:"POST",
+          body:data,
+        })
+        const uploadedImageURL = await res.json();
+        console.log(uploadedImageURL.url)
+        imageUrl = uploadedImageURL.url
+      }
       const jobPost = {
-        title:title,
-        description:description,
+        title: title,
+        description: description,
         language: language,
         skills: selectedSkills,
         minBudget: minBudget,
         maxBudget: maxBudget,
         duration: duration,
-        // imageUrl: imageUrl,
+        imageUrl: imageUrl,
         createdAt: new Date(),
       };
-    const newPostRef = doc(collection(db, "Jobs"));
-    await setDoc(newPostRef, jobPost);
+      const newPostRef = doc(collection(db, "Jobs"));
+      await setDoc(newPostRef, jobPost);
       console.log("Post added successfully");
       toast({
         duration: 5000,
         title: "Post added successfully",
         description: "Post created",
       });
-      navigate("/")
-    } catch (error:any) {
+      navigate("/");
+    } catch (error: any) {
       console.log(error.message);
       toast({
         variant: "destructive",
         title: error.message,
       });
     }
-  }
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (file) {
-  //     setImage(file);
-  //   }
-  // };
+  };
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+    }
+  };
 
   return (
     <Box
@@ -236,7 +254,7 @@ const PostJobPage = () => {
                       name="title"
                       required
                       className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onChange={(e)=>(setTitle(e.target.value))}
+                      onChange={(e) => setTitle(e.target.value)}
                       value={title}
                     />
                   </div>
@@ -252,11 +270,11 @@ const PostJobPage = () => {
                       name="description"
                       required
                       className=" resize-none mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onChange={(e)=>(setDescription(e.target.value))}
+                      onChange={(e) => setDescription(e.target.value)}
                       value={description}
                     />
                   </div>
-                  {/* <div>
+                  <div>
                     <Label
                       htmlFor="image"
                       className="block text-sm font-medium text-gray-700"
@@ -271,7 +289,7 @@ const PostJobPage = () => {
                       className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       onChange={handleImageChange}
                     />
-                  </div> */}
+                  </div>
                 </form>
               )}
 
@@ -375,9 +393,9 @@ const PostJobPage = () => {
                         name="minBudget"
                         required
                         className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={(e)=>setMinBudget(Number(e.target.value))}
+                        onChange={(e) => setMinBudget(Number(e.target.value))}
                         value={minBudget}
-                     />
+                      />
                     </div>
                     <div className="flex flex-col w-1/2">
                       <Label
@@ -392,7 +410,7 @@ const PostJobPage = () => {
                         name="maxBudget"
                         required
                         className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={(e)=>setMaxBudget(Number(e.target.value))}
+                        onChange={(e) => setMaxBudget(Number(e.target.value))}
                         value={maxBudget}
                       />
                     </div>
@@ -405,14 +423,14 @@ const PostJobPage = () => {
                       Project Duration (Days)
                     </Label>
                     <Input
-                        type="number"
-                        id="duration"
-                        name="duration"
-                        required
-                        className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={(e)=>setDuration(Number(e.target.value))}
-                        value={duration}
-                      />
+                      type="number"
+                      id="duration"
+                      name="duration"
+                      required
+                      className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      onChange={(e) => setDuration(Number(e.target.value))}
+                      value={duration}
+                    />
                   </div>
                 </form>
               )}
