@@ -5,6 +5,7 @@ export interface User {
     password: string;
     phone: string;
     role:string;
+    companyName?:string;
     [key: string]: any;
   }
   

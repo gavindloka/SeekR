@@ -1,13 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import Autocomplete from "@mui/material/Autocomplete/Autocomplete";
 import Box from "@mui/material/Box";
@@ -16,12 +9,13 @@ import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import TextField from "@mui/material/TextField/TextField";
 import Typography from "@mui/material/Typography";
-import React, { FormEvent, useState } from "react";
-import { db } from "@/firebase/firebase";
+import React, { FormEvent, useEffect, useState } from "react";
+import { db, auth } from "@/firebase/firebase";
 import { toast } from "@/hooks/use-toast";
-import { setDoc, doc, addDoc, collection } from "firebase/firestore";
+import { setDoc, doc, addDoc, collection, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { User } from "@/models/user";
+
 const languages = ["English", "Indonesia", "Chinese"];
 const steps = ["Job Details", "Requirements", "Budget & Duration"];
 const skills = [
@@ -80,6 +74,7 @@ const skills = [
   { title: "Data-Driven Marketing" },
 ];
 const PostJobPage = () => {
+  const [authUser, setAuthUser] = useState<User | null>(null);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
@@ -107,6 +102,26 @@ const PostJobPage = () => {
       setSkipped(newSkipped);
     }
   };
+
+  const fetchUserData = async () => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user?.uid) {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setAuthUser(docSnap.data() as User);
+          console.log(docSnap.data());
+        } else {
+          console.log("User data not found");
+        }
+      } else {
+        console.log("User is not authenticated");
+      }
+    });
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   const handleBack = () =>
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -155,6 +170,7 @@ const PostJobPage = () => {
         maxBudget: maxBudget,
         duration: duration,
         imageUrl: imageUrl,
+        companyName: authUser?.companyName,
         createdAt: new Date(),
       };
       const newPostRef = doc(collection(db, "Jobs"));

@@ -146,7 +146,7 @@ const RegisterPage = () => {
           phone: phone,
           role: role,
           skills: selectedSkills,
-          comapnyName:companyName,
+          companyName:companyName,
           companyAddress:companyAddress,
           sector:sector,
           web:web,

@@ -7,6 +7,7 @@ import React from 'react'
 import HomePage from './views/HomePage.tsx'
 import { Toaster } from './components/ui/toaster.tsx'
 import PostJobPage from './views/PostJobPage.tsx'
+import BrowseJobPage from './views/BrowseJobPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path:"/post",
     element:<PostJobPage/>
+  },
+  {
+    path:"/browse",
+    element:<BrowseJobPage/>
   }
 ])
 
