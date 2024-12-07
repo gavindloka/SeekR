@@ -1,11 +1,13 @@
 import React, { FC, useState } from "react";
 import { Button } from "./ui/button";
 import { Job } from "@/models/job";
+import { useNavigate } from "react-router";
 
 interface JobCardProps {
   job: Job;
 }
 const JobCard: FC<JobCardProps> = ({ job }) => {
+  const navigate = useNavigate();
   const [showAllSkills, setShowAllSkills] = useState(false);
   const toggleSkills = () => {
     setShowAllSkills(!showAllSkills);
@@ -60,7 +62,7 @@ const JobCard: FC<JobCardProps> = ({ job }) => {
           <span className="font-bold text-gray-800 text-sm">
             Rp{job.minBudget} - Rp{job.maxBudget}
           </span>
-          <Button className=" bg-lime-500 text-white py-2 px-4 rounded-lg">
+          <Button className=" bg-lime-500 text-white py-2 px-4 rounded-lg" onClick={()=>navigate(`/job/${job.jobID}`)}>
             Apply Job
           </Button>
         </div>

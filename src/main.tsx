@@ -8,6 +8,7 @@ import HomePage from './views/HomePage.tsx'
 import { Toaster } from './components/ui/toaster.tsx'
 import PostJobPage from './views/PostJobPage.tsx'
 import BrowseJobPage from './views/BrowseJobPage.tsx'
+import JobDetailPage from './views/JobDetailPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -27,8 +28,16 @@ const router = createBrowserRouter([
     element:<PostJobPage/>
   },
   {
-    path:"/browse",
+    path:"/job",
     element:<BrowseJobPage/>
+  },
+      {
+        path:"/job/:id",
+        element:<JobDetailPage/>
+      },
+  {
+    path:"*",
+    element:<HomePage/>
   }
 ])
 
