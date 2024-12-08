@@ -52,6 +52,20 @@ const BrowseJobPage = () => {
       }
     };
 
+    const fetchTransactions = async () => {
+      try {
+        const transactionsCollection = collection(db, "Transactions");
+        const q = query(
+          transactionsCollection,
+          where("freelancerId", "==", auth.currentUser?.uid)
+        );
+        const transactionsSnapshot = await getDocs(q);
+        const transactionList = transactionsSnapshot.docs.map((doc) => doc.data());
+        setTransactions(transactionList);
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    };
     
     fetchJobs();
   }, []);

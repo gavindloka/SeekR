@@ -36,9 +36,6 @@ const JobCard: FC<JobCardProps> = ({ job }) => {
           where("jobID", "==", job.jobID)
         );
         const transactionsSnapshot = await getDocs(q);
-        const transactionList = transactionsSnapshot.docs.map((doc) =>
-          doc.data()
-        );
         if (!transactionsSnapshot.empty) {
           setIsWaiting(true);
         }

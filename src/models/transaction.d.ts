@@ -1,5 +1,5 @@
 export interface Transaction{
-    transactionID:string;
+    id:string;
     jobID:string;
     jobTitle:string;
     companyID:string;

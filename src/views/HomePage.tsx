@@ -324,6 +324,7 @@ const HomePage = () => {
                 <Button
                   className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105"
                   variant="default"
+                  onClick={()=>navigate("/job")}
                 >
                   Browse Jobs
                 </Button>

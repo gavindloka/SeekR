@@ -50,7 +50,7 @@ const JobDetailPage = () => {
     e.preventDefault();
     try {
       const transactionPost = {
-        jobID: job?.jobID,
+        jobID: id,
         jobTitle: job?.title,
         companyID: job?.companyID,
         companyName: job?.companyName,

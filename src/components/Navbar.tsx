@@ -25,24 +25,13 @@ const freelancerComponents: {
   description: string;
 }[] = [
   {
-    title: "Create Profile",
-    href: "/docs/freelancers/create-profile",
-    description: "A form where freelancers can create their profile.",
-  },
-  {
-    title: "Submit Proposal",
-    href: "/docs/freelancers/submit-proposal",
-    description: "A simple form to submit proposals to job listings.",
-  },
-  {
-    title: "Portfolio",
-    href: "/docs/freelancers/portfolio",
-    description:
-      "Allow freelancers to showcase their past work with links or file uploads.",
+    title: "Browse Jobs",
+    href: "/job",
+    description: "Where freelancers can browse and apply for job opportunities.",
   },
   {
     title: "My Jobs",
-    href: "/docs/freelancers/jobs-dashboard",
+    href: "/job/personal",
     description: "A dashboard where freelancers can track their jobs.",
   },
 ];
@@ -54,25 +43,19 @@ const employerComponents: {
 }[] = [
   {
     title: "Post a Job",
-    href: "/docs/employers/post-job",
+    href: "/post",
     description: "A simple form for employers to post jobs.",
   },
   {
-    title: "Browse Freelancers",
-    href: "/docs/employers/browse-freelancers",
+    title: "Manage Applicants",
+    href: "/applicants",
     description:
-      "Allow employers to search and filter freelancers based on skills.",
+      "A page where employers can review, accept, or decline job applicants."
   },
   {
-    title: "View Freelancer Profiles",
+    title: "Manage Job Listing",
     href: "/docs/employers/view-freelancer-profiles",
-    description: "Employers can view detailed freelancer profiles.",
-  },
-  {
-    title: "Manage Job Listings",
-    href: "/docs/employers/manage-job-listings",
-    description:
-      "A page where employers can edit or delete their posted job listings.",
+    description: "Employers can manage and evaluate their posted job listings.",
   },
 ];
 
@@ -100,7 +83,7 @@ export function Navbar() {
     const auth = getAuth();
     try {
       await signOut(auth);
-      window.location.reload();
+      navigate("/");
     } catch (error) {
       console.error("Error signing out: ", error);
     }
