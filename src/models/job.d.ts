@@ -7,6 +7,7 @@ export interface Job {
     minBudget:number;
     maxBudget:number;
     duration:number;
+    companyID:string;
     companyName:string;
     skills: string[];
   }

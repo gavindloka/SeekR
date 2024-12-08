@@ -1,17 +1,39 @@
 import JobCard from "@/components/JobCard";
 import { Navbar } from "@/components/Navbar";
 import { Checkbox } from "@/components/ui/checkbox";
-import { db } from "@/firebase/firebase";
+import { db, auth } from "@/firebase/firebase";
 import { Job } from "@/models/job";
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { User } from "@/models/user";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { FormEvent, useEffect, useState } from "react";
 
 const BrowseJobPage = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [costFilters, setCostFilters] = useState<string[]>([]);
   const [durationFilters, setDurationFilters] = useState<string[]>([]);
-
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [authUser, setAuthUser] = useState<User | null>(null);
+  
+  const fetchUserData = async () => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user?.uid) {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setAuthUser(docSnap.data() as User);
+          console.log(docSnap.data());
+        } else {
+          console.log("User data not found");
+        }
+      } else {
+        console.log("User is not authenticated");
+      }
+    });
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -30,6 +52,7 @@ const BrowseJobPage = () => {
       }
     };
 
+    
     fetchJobs();
   }, []);
   const toggleFilter = (filter: string, type: string) => {
@@ -74,6 +97,8 @@ const BrowseJobPage = () => {
 
     return matchesCost && matchesDuration;
   });
+
+
 
   return (
     <>

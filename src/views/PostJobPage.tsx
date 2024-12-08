@@ -170,6 +170,7 @@ const PostJobPage = () => {
         maxBudget: maxBudget,
         duration: duration,
         imageUrl: imageUrl,
+        companyID: auth.currentUser?.uid,
         companyName: authUser?.companyName,
         createdAt: new Date(),
       };
