@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface Transaction{
     id:string;
     jobID:string;
@@ -6,6 +8,6 @@ export interface Transaction{
     companyName:string;
     freelancerID:string;
     freelancerName:string;
-    transactionDate:Date;
+    transactionDate: Timestamp;
     status:string;
 }

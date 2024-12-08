@@ -203,9 +203,7 @@ const JobDetailPage = () => {
         <h3 className="font-semibold text-xl text-lime-700">Job Description</h3>
         <p className="mt-3 text-lg text-gray-700">{job?.description}</p>
       </div>
-      <div className="relative mt-10">
-        <Footer />
-      </div>
+
     </>
   );
 };

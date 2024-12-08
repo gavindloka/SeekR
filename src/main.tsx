@@ -11,6 +11,7 @@ import BrowseJobPage from "./views/BrowseJobPage.tsx";
 import JobDetailPage from "./views/JobDetailPage.tsx";
 import MyJobPage from "./views/MyJobPage.tsx";
 import ManageApplicantsPage from "./views/ManageApplicantsPage.tsx";
+import ManageJobPage from "./views/ManageJobPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/job/personal",
     element: <MyJobPage />,
+  },
+  {
+    path: "/job/manage",
+    element: <ManageJobPage/>,
   },
   {
     path:"/applicants",

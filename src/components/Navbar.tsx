@@ -27,7 +27,8 @@ const freelancerComponents: {
   {
     title: "Browse Jobs",
     href: "/job",
-    description: "Where freelancers can browse and apply for job opportunities.",
+    description:
+      "Where freelancers can browse and apply for job opportunities.",
   },
   {
     title: "My Jobs",
@@ -50,12 +51,12 @@ const employerComponents: {
     title: "Manage Applicants",
     href: "/applicants",
     description:
-      "A page where employers can review, accept, or decline job applicants."
+      "A page where employers can review, accept, or decline job applicants.",
   },
   {
-    title: "Manage Job Listing",
-    href: "/docs/employers/view-freelancer-profiles",
-    description: "Employers can manage and evaluate their posted job listings.",
+    title: "Active Job Listing",
+    href: "/job/manage",
+    description: "Employers can evaluate their active job listings.",
   },
 ];
 
@@ -88,7 +89,7 @@ export function Navbar() {
       console.error("Error signing out: ", error);
     }
   };
-  
+
   React.useEffect(() => {
     fetchUserData();
   }, [auth]);
@@ -109,52 +110,66 @@ export function Navbar() {
             </label>
           </h1>
         </NavigationMenuItem>
-        <NavigationMenuItem className="xs:hidden sm:block">
-          <NavigationMenuTrigger>Find Work</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {freelancerComponents.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem className="xs:hidden sm:block">
-          <NavigationMenuTrigger>Find Talent</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {employerComponents.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+        {authUser?.role === "freelancer" ? (
+          <NavigationMenuItem className="xs:hidden sm:block">
+            <NavigationMenuTrigger>Find Work</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                {freelancerComponents.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        ) : (
+          <NavigationMenuItem className="xs:hidden sm:block">
+            <NavigationMenuTrigger>Find Talent</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                {employerComponents.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
 
       {authUser ? (
         <NavigationMenuList>
           <div>
-            Hello, <span className="mr-4 font-bold text-lime-500">{authUser.name}</span>
+            Hello,{" "}
+            <span className="mr-4 font-bold text-lime-500">
+              {authUser.name}
+            </span>
           </div>
-          <Button variant="outline" className="hover:border-lime-500 hover:text-lime-500" onClick={()=>logout()}>
+          <Button
+            variant="outline"
+            className="hover:border-lime-500 hover:text-lime-500"
+            onClick={() => logout()}
+          >
             Log out
           </Button>
         </NavigationMenuList>
       ) : (
         <NavigationMenuList>
-          <Button variant="ghost" className=" bg-white border-none" onClick={() => navigate("/login")} >
+          <Button
+            variant="ghost"
+            className=" bg-white border-none"
+            onClick={() => navigate("/login")}
+          >
             Log in
           </Button>
           <Button className="bg-lime-500" onClick={() => navigate("/register")}>

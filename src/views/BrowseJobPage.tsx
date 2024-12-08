@@ -12,7 +12,6 @@ const BrowseJobPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [costFilters, setCostFilters] = useState<string[]>([]);
   const [durationFilters, setDurationFilters] = useState<string[]>([]);
-  const [transactions, setTransactions] = useState<any[]>([]);
   const [authUser, setAuthUser] = useState<User | null>(null);
   
   const fetchUserData = async () => {
@@ -37,38 +36,40 @@ const BrowseJobPage = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
+        setLoading(true);
+  
         const jobsCollection = collection(db, "Jobs");
         const jobsSnapshot = await getDocs(jobsCollection);
-        const jobList = jobsSnapshot.docs.map((doc) => ({
+        const allJobs = jobsSnapshot.docs.map((doc) => ({
           jobID: doc.id,
           ...(doc.data() as Omit<Job, "jobID">),
         }));
-        console.log(jobList);
-        setJobs(jobList);
+  
+        const transactionsCollection = collection(db, "Transactions");
+        const q = query(
+          transactionsCollection,
+        );
+        const transactionsSnapshot = await getDocs(q);
+  
+        const acceptedJobIDs = transactionsSnapshot.docs
+          .filter((doc) => doc.data().status === "Accepted")
+          .map((doc) => doc.data().jobID);
+  
+        const filteredJobs = allJobs.filter(
+          (job) => !acceptedJobIDs.includes(job.jobID)
+        );
+  
+        setJobs(filteredJobs);
       } catch (error: any) {
-        console.error(error.message);
+        console.error("Error fetching jobs:", error.message);
       } finally {
         setLoading(false);
       }
     };
-
-    const fetchTransactions = async () => {
-      try {
-        const transactionsCollection = collection(db, "Transactions");
-        const q = query(
-          transactionsCollection,
-          where("freelancerId", "==", auth.currentUser?.uid)
-        );
-        const transactionsSnapshot = await getDocs(q);
-        const transactionList = transactionsSnapshot.docs.map((doc) => doc.data());
-        setTransactions(transactionList);
-      } catch (error: any) {
-        console.error(error.message);
-      }
-    };
-    
+  
     fetchJobs();
   }, []);
+  
   const toggleFilter = (filter: string, type: string) => {
     if (type === "cost") {
       setCostFilters((prev) =>

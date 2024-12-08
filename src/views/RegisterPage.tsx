@@ -363,7 +363,6 @@ const RegisterPage = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      placeholder="Please Input Your Skills"
                     />
                   )}
                 />
