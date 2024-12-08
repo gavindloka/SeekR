@@ -1,5 +1,5 @@
 export interface Job {
-  jobID:string;
+    jobID:string;
     title: string;
     description: string;
     imageUrl:string;
