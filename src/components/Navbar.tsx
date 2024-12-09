@@ -111,41 +111,38 @@ export function Navbar() {
             </label>
           </h1>
         </NavigationMenuItem>
-        {authUser?.role === "freelancer" ? (
-          <NavigationMenuItem className="xs:hidden sm:block">
-            <NavigationMenuTrigger>Find Work</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                {freelancerComponents.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    href={component.href}
-                  >
-                    {component.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        ) : (
-          <NavigationMenuItem className="xs:hidden sm:block">
-            <NavigationMenuTrigger>Find Talent</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                {employerComponents.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    href={component.href}
-                  >
-                    {component.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        )}
+        {(authUser?.role === "freelancer" || authUser?.role === "businessOwner") && (
+  <NavigationMenuItem className="xs:hidden sm:block">
+    {authUser?.role === "freelancer" ? (
+      <>
+        <NavigationMenuTrigger>Find Work</NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+            {freelancerComponents.map((component) => (
+              <ListItem key={component.title} title={component.title} href={component.href}>
+                {component.description}
+              </ListItem>
+            ))}
+          </ul>
+        </NavigationMenuContent>
+      </>
+    ) : (
+      <>
+        <NavigationMenuTrigger>Find Talent</NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+            {employerComponents.map((component) => (
+              <ListItem key={component.title} title={component.title} href={component.href}>
+                {component.description}
+              </ListItem>
+            ))}
+          </ul>
+        </NavigationMenuContent>
+      </>
+    )}
+  </NavigationMenuItem>
+)}
+
       </NavigationMenuList>
 
       {authUser ? (

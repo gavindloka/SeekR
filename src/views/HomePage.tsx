@@ -300,6 +300,7 @@ const HomePage = () => {
                 >
                   <Button
                     className="bg-lime-500 w-36 h-12 text-lg text-white rounded-xl hover:bg-white hover:text-lime-500 hover:border-lime-500 transition-all duration-300 transform hover:scale-105"
+                    onClick={()=>navigate("/login")}
                   >
                     Browse Jobs
                   </Button>
@@ -310,7 +311,8 @@ const HomePage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
                 >
-                  <Button  variant="secondary" className="rounded-xl w-36 h-12 text-lg text-lime-500 hover:border-lime-500  transition-all duration-300 transform hover:scale-105">
+                  <Button  variant="secondary" className="rounded-xl w-36 h-12 text-lg text-lime-500 hover:border-lime-500  transition-all duration-300 transform hover:scale-105"
+                  onClick={()=>navigate("/login")}>
                     Post a Job
                   </Button>
                 </motion.div>
@@ -362,7 +364,7 @@ const HomePage = () => {
           </label>
           ?
         </motion.h2>
-        <div className=" w-4/6 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className=" w-5/6 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {benefits.map((benefit, index) => (
             <BenefitCard
               key={index}
