@@ -1,15 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Job } from "@/models/job";
 import { useNavigate } from "react-router";
-import { Navbar } from "@/components/Navbar";
-import { Checkbox } from "@/components/ui/checkbox";
 import { db, auth } from "@/firebase/firebase";
-import { User } from "@/models/user";
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
   query,
   where,

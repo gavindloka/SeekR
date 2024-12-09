@@ -1,14 +1,10 @@
-import { auth, db } from "@/firebase/firebase";
 import { Job } from "@/models/job";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import React, { FC, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { FC, useState } from "react";
 
 interface JobCardProps {
   job: Job;
 }
 const MyJobCard: FC<JobCardProps> = ({ job }) => {
-  const navigate = useNavigate();
   const [showAllSkills, setShowAllSkills] = useState(false);
   const toggleSkills = () => {
     setShowAllSkills(!showAllSkills);

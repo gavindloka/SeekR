@@ -1,10 +1,9 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { Job } from "@/models/job";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import Footer from "@/components/Footer";
 import { db, auth } from "@/firebase/firebase";
 import {
   Dialog,
@@ -83,6 +82,7 @@ const JobDetailPage = () => {
     const fetchJobDetail = async () => {
       if (!id) {
         console.log("Invalid job ID");
+        console.log(loading)
         setLoading(false);
         return;
       }

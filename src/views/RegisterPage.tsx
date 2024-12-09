@@ -332,6 +332,7 @@ const RegisterPage = () => {
               <div className="mt-6">
                 <Autocomplete
                   onChange={(e, newValue) => {
+                    e.preventDefault();
                     const skillsTitles = newValue.map((item) => item.title);
                     setSelectedSkills(skillsTitles);
                   }}
@@ -444,7 +445,7 @@ const RegisterPage = () => {
                     />
                   </SelectTrigger>
                   <SelectContent>
-                    {sectors.map((sector, index) => {
+                    {sectors.map((sector) => {
                       return (
                         <SelectItem
                           value={sector.toLowerCase().replace(/\s+/g, "")}

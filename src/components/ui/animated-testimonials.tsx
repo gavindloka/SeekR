@@ -3,7 +3,6 @@
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { FaArrowRight } from "react-icons/fa6";
 
 type Testimonial = {
   quote: string;

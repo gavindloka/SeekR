@@ -31,6 +31,7 @@ const ManageJobPage = () => {
         if (docSnap.exists()) {
           setAuthUser(docSnap.data() as User);
           console.log(docSnap.data());
+          console.log(authUser)
         } else {
           console.log("User data not found");
         }

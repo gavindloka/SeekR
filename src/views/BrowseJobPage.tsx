@@ -11,9 +11,8 @@ import {
   getDoc,
   getDocs,
   query,
-  where,
 } from "firebase/firestore";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const BrowseJobPage = () => {
   const [jobs, setJobs] = useState<Job[]>([]);

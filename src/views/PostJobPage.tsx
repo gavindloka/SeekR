@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import React, { FormEvent, useEffect, useState } from "react";
 import { db, auth } from "@/firebase/firebase";
 import { toast } from "@/hooks/use-toast";
-import { setDoc, doc, addDoc, collection, getDoc } from "firebase/firestore";
+import { setDoc, doc, collection, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
 import { User } from "@/models/user";
 
@@ -129,6 +129,7 @@ const PostJobPage = () => {
   const handleReset = () => setActiveStep(0);
   const handleLangChange = (event: any, newValue: string | null) => {
     setLanguage(newValue || "");
+    console.log(event)
   };
   function generateRandomString(length:number) {
     const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -321,6 +322,7 @@ const PostJobPage = () => {
                     </Label>
                     <Autocomplete
                       onChange={(e, newValue) => {
+                        console.log(e)
                         if (newValue.length <= 3) {
                           const skillsTitles = newValue.map(
                             (item) => item.title

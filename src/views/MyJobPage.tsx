@@ -1,18 +1,15 @@
 import { Navbar } from "@/components/Navbar";
 import { db, auth } from "@/firebase/firebase";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Job } from "@/models/job";
 
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
   query,
   where,
 } from "firebase/firestore";
 import MyJobCard from "@/components/MyJobCard";
-import { CircularProgress } from "@mui/material";
 import Footer from "@/components/Footer";
 const MyJobPage = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
