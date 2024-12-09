@@ -113,7 +113,7 @@ const ManageApplicantsPage = () => {
         <Navbar />
       </div>
       <div className="mt-28 w-full flex flex-col gap-10 px-32">
-        <h2 className="text-3xl font-bold tracking-tight xs:text-center lg:text-left lg:text-6xl lg:leading-snug">
+        <h2 className="text-3xl font-bold tracking-tight xs:text-center lg:text-left lg:text-6xl lg:leading-snug flex-grow">
           Manage Applicants
         </h2>
         <div>

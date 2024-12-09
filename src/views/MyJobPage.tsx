@@ -52,7 +52,7 @@ const MyJobPage = () => {
       <div className="w-full border-b-2 fixed top-0 left-0 z-10">
         <Navbar />
       </div>
-      <div className="mt-28 w-full flex flex-col px-32">
+      <div className="mt-28 w-full flex flex-col px-32 flex-grow">
         <h2 className="text-3xl font-bold tracking-tight xs:text-center lg:text-left lg:text-6xl lg:leading-snug">
           My Job
         </h2>
@@ -70,7 +70,7 @@ const MyJobPage = () => {
           )}
         </div>
       </div>
-      <div className="relative bottom-0 mt-56">
+      <div className="relative bottom-0 mt-20">
         <Footer />
       </div>
     </div>
