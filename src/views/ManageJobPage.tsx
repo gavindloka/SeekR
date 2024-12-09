@@ -31,7 +31,7 @@ const ManageJobPage = () => {
         if (docSnap.exists()) {
           setAuthUser(docSnap.data() as User);
           console.log(docSnap.data());
-          console.log(authUser)
+          console.log(authUser);
         } else {
           console.log("User data not found");
         }
@@ -52,27 +52,25 @@ const ManageJobPage = () => {
     const startDate = new Date(transactionDate);
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + duration);
-    console.log(transactionDate)
-    console.log(endDate)
+    console.log(transactionDate);
+    console.log(endDate);
     const today = new Date();
-    
+
     const totalDuration = Math.max(
       (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
       0
-    ); 
-    console.log(totalDuration)
+    );
+    console.log(totalDuration);
     const daysElapsed = Math.max(
       (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
       0
-    ); 
-    console.log(daysElapsed)
-
+    );
+    console.log(daysElapsed);
 
     const progress = Math.min((daysElapsed / totalDuration) * 100, 100);
-    console.log(progress) 
-   
-    return Math.round(progress);
+    console.log(progress);
 
+    return Math.round(progress);
   };
 
   useEffect(() => {
@@ -95,7 +93,10 @@ const ManageJobPage = () => {
         const transactionsSnapshot = await getDocs(q);
         const acceptedTransactions = transactionsSnapshot.docs.map((doc) => {
           const transaction = doc.data() as Transaction;
-          console.log("Transaction Data:", transaction.transactionDate.toDate().getDate());
+          console.log(
+            "Transaction Data:",
+            transaction.transactionDate.toDate().getDate()
+          );
           return transaction;
         });
 
@@ -109,12 +110,11 @@ const ManageJobPage = () => {
               progress: calculateProgress(
                 transaction.transactionDate.toDate(),
                 job.duration
-              ), 
+              ),
             };
           })
           .filter((job): job is JobWithProgress => job !== null);
 
-          
         setFilteredJobs(acceptedJobs);
       } catch (error: any) {
         console.error("Error fetching jobs:", error.message);
@@ -139,7 +139,7 @@ const ManageJobPage = () => {
         </div>
       </div>
       <div className="relative bottom-0 mt-20">
-      <Footer />
+        <Footer />
       </div>
     </div>
   );

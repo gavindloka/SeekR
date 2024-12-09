@@ -3,12 +3,7 @@ import { db, auth } from "@/firebase/firebase";
 import { useEffect, useState } from "react";
 import { Job } from "@/models/job";
 
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import MyJobCard from "@/components/MyJobCard";
 import Footer from "@/components/Footer";
 const MyJobPage = () => {

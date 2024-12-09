@@ -364,7 +364,7 @@ const HomePage = () => {
           </label>
           ?
         </motion.h2>
-        <div className=" w-5/6 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="w-3/4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
             <BenefitCard
               key={index}
