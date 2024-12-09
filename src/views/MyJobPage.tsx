@@ -2,9 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { db, auth } from "@/firebase/firebase";
 import React, { useEffect, useState } from "react";
 import { Job } from "@/models/job";
-import { useNavigate } from "react-router";
-import { Checkbox } from "@/components/ui/checkbox";
-import { User } from "@/models/user";
+
 import {
   collection,
   doc,
@@ -13,8 +11,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import JobCard from "@/components/JobCard";
 import MyJobCard from "@/components/MyJobCard";
+import { CircularProgress } from "@mui/material";
 import Footer from "@/components/Footer";
 const MyJobPage = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -53,7 +51,7 @@ const MyJobPage = () => {
     fetchAcceptedJobs();
   }, []);
   return (
-    <div className="flex flex-col w-screen">
+    <div className="flex flex-col w-screen min-h-screen">
       <div className="w-full border-b-2 fixed top-0 left-0 z-10">
         <Navbar />
       </div>
@@ -75,7 +73,9 @@ const MyJobPage = () => {
           )}
         </div>
       </div>
-
+      <div className="relative bottom-0 mt-56">
+        <Footer />
+      </div>
     </div>
   );
 };

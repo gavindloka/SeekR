@@ -1,7 +1,4 @@
 import { Navbar } from "@/components/Navbar";
-import React from "react";
-import JobCard from "@/components/JobCard";
-import { Checkbox } from "@/components/ui/checkbox";
 import { db, auth } from "@/firebase/firebase";
 import { Job } from "@/models/job";
 import { User } from "@/models/user";
@@ -22,10 +19,10 @@ type JobWithProgress = Job & { progress: number };
 
 const ManageJobPage = () => {
   const [authUser, setAuthUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const [filteredJobs, setFilteredJobs] = useState<
     (Job & { progress: number })[]
   >([]);
+  const [isDone, setIsDone] = useState()
 
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
@@ -51,13 +48,14 @@ const ManageJobPage = () => {
   const calculateProgress = (
     transactionDate: Date,
     duration: number
-  ): number => {
+  ): number | "Done" => {
     const startDate = new Date(transactionDate);
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + duration);
     console.log(transactionDate)
     console.log(endDate)
     const today = new Date();
+    
     const totalDuration = Math.max(
       (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
       0
@@ -69,8 +67,12 @@ const ManageJobPage = () => {
     ); 
     console.log(daysElapsed)
 
-    const progress = Math.min((daysElapsed / totalDuration) * 100, 100); 
+
+    const progress = Math.min((daysElapsed / totalDuration) * 100, 100);
+    console.log(progress) 
+   
     return Math.round(progress);
+
   };
 
   useEffect(() => {
@@ -126,7 +128,7 @@ const ManageJobPage = () => {
       <div className="w-full border-b-2 fixed top-0 left-0 z-10">
         <Navbar />
       </div>
-      <div className="mt-28 w-full flex flex-col px-32">
+      <div className="mt-28 w-full flex flex-col px-32 flex-grow">
         <h2 className="text-3xl font-bold tracking-tight xs:text-center lg:text-left lg:text-6xl lg:leading-snug">
           Active Jobs
         </h2>
@@ -135,6 +137,9 @@ const ManageJobPage = () => {
             <ManageJobCard key={job.jobID} job={job} progress={job.progress} />
           ))}
         </div>
+      </div>
+      <div className="relative bottom-0 mt-20">
+      <Footer />
       </div>
     </div>
   );

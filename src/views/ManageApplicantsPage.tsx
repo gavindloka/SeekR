@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Transaction } from "@/models/transaction";
 import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "@/hooks/use-toast";
+import Footer from "@/components/Footer";
 
 const ManageApplicantsPage = () => {
   const [transactionList, setTransactionList] = useState<Transaction[]>([]);
@@ -108,7 +109,7 @@ const ManageApplicantsPage = () => {
   };
 
   return (
-    <div className="flex w-screen min-h-screen">
+    <div className="flex flex-col w-screen min-h-screen">
       <div className="w-full border-b-2 fixed top-0 left-0 z-10">
         <Navbar />
       </div>
@@ -162,6 +163,9 @@ const ManageApplicantsPage = () => {
             </TableBody>
           </Table>
         </div>
+      </div>
+      <div className="relative bottom-0 mt-72">
+      <Footer />
       </div>
     </div>
   );

@@ -13,9 +13,9 @@ import {
 } from "firebase/firestore";
 interface JobCardProps {
   job: Job;
-  progress:number;
+  progress: number;
 }
-const ManageJobCard: FC<JobCardProps> = ({ job, progress}) => {
+const ManageJobCard: FC<JobCardProps> = ({ job, progress }) => {
   const navigate = useNavigate();
   const [showAllSkills, setShowAllSkills] = useState(false);
   const toggleSkills = () => {
@@ -69,12 +69,16 @@ const ManageJobCard: FC<JobCardProps> = ({ job, progress}) => {
         </div>
         <div className="mt-4">
           <div className="text-gray-700 text-sm mb-2">Progress :</div>
-          <div className="relative w-full bg-gray-200 rounded-full h-4">
-            <div
-              className="absolute top-0 left-0 h-4 rounded-full bg-lime-500"
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
+          {progress >= 100 ? (
+            <div className="text-lime-500 font-semibold -mt-1">Done</div>
+          ) : (
+            <div className="relative w-full bg-gray-200 rounded-full h-4">
+              <div
+                className="absolute top-0 left-0 h-4 rounded-full bg-lime-500"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+          )}
         </div>
       </div>
     </div>

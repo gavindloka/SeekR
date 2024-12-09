@@ -4,7 +4,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { db, auth } from "@/firebase/firebase";
 import { Job } from "@/models/job";
 import { User } from "@/models/user";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { CircularProgress } from "@mui/material";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { FormEvent, useEffect, useState } from "react";
 
 const BrowseJobPage = () => {
@@ -13,7 +21,7 @@ const BrowseJobPage = () => {
   const [costFilters, setCostFilters] = useState<string[]>([]);
   const [durationFilters, setDurationFilters] = useState<string[]>([]);
   const [authUser, setAuthUser] = useState<User | null>(null);
-  
+
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
       if (user?.uid) {
@@ -36,40 +44,53 @@ const BrowseJobPage = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
+        if (!authUser) return;
         setLoading(true);
-  
+
         const jobsCollection = collection(db, "Jobs");
         const jobsSnapshot = await getDocs(jobsCollection);
         const allJobs = jobsSnapshot.docs.map((doc) => ({
           jobID: doc.id,
           ...(doc.data() as Omit<Job, "jobID">),
         }));
-  
+
         const transactionsCollection = collection(db, "Transactions");
-        const q = query(
-          transactionsCollection,
-        );
+        const q = query(transactionsCollection);
         const transactionsSnapshot = await getDocs(q);
-  
+
         const acceptedJobIDs = transactionsSnapshot.docs
           .filter((doc) => doc.data().status === "Accepted")
           .map((doc) => doc.data().jobID);
-  
+
         const filteredJobs = allJobs.filter(
           (job) => !acceptedJobIDs.includes(job.jobID)
         );
-  
-        setJobs(filteredJobs);
+
+        const userSkills = authUser?.skills || [];
+        console.log(userSkills);
+        const rankedJobs = filteredJobs
+          .map((job) => {
+            console.log(job.skills);
+            const matchingSkills = job.skills.filter((skill) =>
+              userSkills.includes(skill)
+            ).length;
+            console.log(matchingSkills);
+            return { ...job, score: matchingSkills };
+          })
+          .sort((a, b) => b.score - a.score);
+
+        console.log(rankedJobs);
+        setJobs(rankedJobs);
       } catch (error: any) {
         console.error("Error fetching jobs:", error.message);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchJobs();
-  }, []);
-  
+  }, [authUser]);
+
   const toggleFilter = (filter: string, type: string) => {
     if (type === "cost") {
       setCostFilters((prev) =>
@@ -112,8 +133,6 @@ const BrowseJobPage = () => {
 
     return matchesCost && matchesDuration;
   });
-
-
 
   return (
     <>
@@ -256,11 +275,17 @@ const BrowseJobPage = () => {
                 <span className="text-yellow-500">You</span>
               </h1>
             </div>
-            <div className="mt-10 mx-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-              {filteredJobs.map((job) => (
-                <JobCard key={job.jobID} job={job} />
-              ))}
-            </div>
+            {loading?(
+              <div className="absolute inset-0 flex justify-center items-center">
+              <CircularProgress color="success"/>
+              </div>
+            ):(
+              <div className="mt-10 mx-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                {filteredJobs.map((job) => (
+                  <JobCard key={job.jobID} job={job} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

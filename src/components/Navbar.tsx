@@ -85,6 +85,7 @@ export function Navbar() {
     try {
       await signOut(auth);
       navigate("/");
+      window.location.reload()
     } catch (error) {
       console.error("Error signing out: ", error);
     }
