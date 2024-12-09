@@ -10,7 +10,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ManageJobCard from "@/components/ManageJobCard";
 import { Transaction } from "@/models/transaction";
 import Footer from "@/components/Footer";
@@ -22,7 +22,6 @@ const ManageJobPage = () => {
   const [filteredJobs, setFilteredJobs] = useState<
     (Job & { progress: number })[]
   >([]);
-  const [isDone, setIsDone] = useState()
 
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
