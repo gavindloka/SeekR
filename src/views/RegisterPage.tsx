@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { auth, db } from "@/firebase/firebase";
+// import { auth, db } from "@/firebase/firebase";
 import { Label } from "@radix-ui/react-label";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router";
-import { setDoc, doc } from "firebase/firestore";
-import { useToast } from "@/hooks/use-toast";
+// import { setDoc, doc } from "firebase/firestore";
+// import { useToast } from "@/hooks/use-toast";
 import {
   Select,
   SelectContent,
@@ -33,19 +33,19 @@ const RegisterPage = () => {
   const [instagram, setInstagram] = useState("");
   const [companyName, setCompanyName] = useState("")
 
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const navigate = useNavigate();
 
   const [showForm, setShowForm] = useState(true);
 
-  const resetForm = () => {
-    setName("");
-    setAge(0);
-    setEmail("");
-    setPhone("");
-    setPassword("");
-    setRole("");
-  };
+  // const resetForm = () => {
+  //   setName("");
+  //   setAge(0);
+  //   setEmail("");
+  //   setPhone("");
+  //   setPassword("");
+  //   setRole("");
+  // };
 
   const skills = [
     { title: "Business Analyst" },
@@ -131,45 +131,45 @@ const RegisterPage = () => {
     setShowForm(false);
   };
 
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  // const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      console.log(user);
-      if (user) {
-        await setDoc(doc(db, "Users", user.uid), {
-          name: name,
-          age: age,
-          email: user.email,
-          phone: phone,
-          role: role,
-          skills: selectedSkills,
-          companyName:companyName,
-          companyAddress:companyAddress,
-          sector:sector,
-          web:web,
-          description:description,
-          instagram:instagram
-        });
-      }
-      console.log("User registered successfully");
-      resetForm();
-      toast({
-        duration: 5000,
-        title: "User registered successfully",
-        description: "Account created",
-      });
-      navigate("/login");
-    } catch (error: any) {
-      console.log(error.message);
-      toast({
-        variant: "destructive",
-        title: error.message,
-        description: "There was a problem with your request.",
-      });
-    }
+    // try {
+    //   await createUserWithEmailAndPassword(auth, email, password);
+    //   const user = auth.currentUser;
+    //   console.log(user);
+    //   if (user) {
+    //     await setDoc(doc(db, "Users", user.uid), {
+    //       name: name,
+    //       age: age,
+    //       email: user.email,
+    //       phone: phone,
+    //       role: role,
+    //       skills: selectedSkills,
+    //       companyName:companyName,
+    //       companyAddress:companyAddress,
+    //       sector:sector,
+    //       web:web,
+    //       description:description,
+    //       instagram:instagram
+    //     });
+    //   }
+    //   console.log("User registered successfully");
+    //   resetForm();
+    //   toast({
+    //     duration: 5000,
+    //     title: "User registered successfully",
+    //     description: "Account created",
+    //   });
+    //   navigate("/login");
+    // } catch (error: any) {
+    //   console.log(error.message);
+    //   toast({
+    //     variant: "destructive",
+    //     title: error.message,
+    //     description: "There was a problem with your request.",
+    //   });
+    // }
   };
 
   const handleRoleChange = (value: string) => {
@@ -331,11 +331,11 @@ const RegisterPage = () => {
               </motion.h1>
               <div className="mt-6">
                 <Autocomplete
-                  onChange={(e, newValue) => {
-                    e.preventDefault();
-                    const skillsTitles = newValue.map((item) => item.title);
-                    setSelectedSkills(skillsTitles);
-                  }}
+                  // onChange={(e, newValue) => {
+                  //   e.preventDefault();
+                  //   // const skillsTitles = newValue.map((item) => item.title);
+                  //   // setSelectedSkills(skillsTitles);
+                  // }}
                   multiple
                   id="tags-outlined"
                   options={skills}

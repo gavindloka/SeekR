@@ -1,4 +1,3 @@
-
 const Footer = () => {
   return (
     <footer className="bg-lime-200 rounded-tl-3xl rounded-tr-3xl">
@@ -23,7 +22,10 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="https://tailwindcss.com/" className="hover:underline ">
+                  <a
+                    href="https://tailwindcss.com/"
+                    className="hover:underline "
+                  >
                     {/* Tailwind CSS */}
                   </a>
                 </li>
@@ -58,12 +60,12 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium ">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline ">
+                  <a href="https://www.tiktok.com/@seekrjobs?_t=8s5ZVNiqDUF&_r=1" className="hover:underline ">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline ">
+                  <a href="https://www.tiktok.com/@seekrjobs?_t=8s5ZVNiqDUF&_r=1" className="hover:underline ">
                     Terms &amp; Conditions
                   </a>
                 </li>
@@ -82,7 +84,7 @@ const Footer = () => {
           </span>
           <div className="flex mt-4 sm:justify-center sm:mt-0">
             <a
-              href="#"
+              href="https://www.tiktok.com/@seekrjobs?_t=8s5ZVNiqDUF&_r=1"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -101,7 +103,7 @@ const Footer = () => {
               <span className="sr-only">Facebook page</span>
             </a>
             <a
-              href="#"
+              href="https://www.tiktok.com/@seekrjobs?_t=8s5ZVNiqDUF&_r=1"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
@@ -116,7 +118,7 @@ const Footer = () => {
               <span className="sr-only">Discord community</span>
             </a>
             <a
-              href="#"
+              href="https://www.tiktok.com/@seekrjobs?_t=8s5ZVNiqDUF&_r=1"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
@@ -135,7 +137,7 @@ const Footer = () => {
               <span className="sr-only">Twitter page</span>
             </a>
             <a
-              href="#"
+              href="https://www.tiktok.com/@seekrjobs?_t=8s5ZVNiqDUF&_r=1"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
@@ -154,23 +156,24 @@ const Footer = () => {
               <span className="sr-only">GitHub account</span>
             </a>
             <a
-              href="#"
+              href="https://www.tiktok.com/@seekrjobs?_t=8s5ZVNiqDUF&_r=1"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
-                className="w-4 h-4"
+                className="w-5 h-5 m-auto"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
-                viewBox="0 0 20 20"
+                viewBox="0 0 30 30"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 0a10 10 0 1 0 10 10A10.009 10.009 0 0 0 10 0Zm6.613 4.614a8.523 8.523 0 0 1 1.93 5.32 20.094 20.094 0 0 0-5.949-.274c-.059-.149-.122-.292-.184-.441a23.879 23.879 0 0 0-.566-1.239 11.41 11.41 0 0 0 4.769-3.366ZM8 1.707a8.821 8.821 0 0 1 2-.238 8.5 8.5 0 0 1 5.664 2.152 9.608 9.608 0 0 1-4.476 3.087A45.758 45.758 0 0 0 8 1.707ZM1.642 8.262a8.57 8.57 0 0 1 4.73-5.981A53.998 53.998 0 0 1 9.54 7.222a32.078 32.078 0 0 1-7.9 1.04h.002Zm2.01 7.46a8.51 8.51 0 0 1-2.2-5.707v-.262a31.64 31.64 0 0 0 8.777-1.219c.243.477.477.964.692 1.449-.114.032-.227.067-.336.1a13.569 13.569 0 0 0-6.942 5.636l.009.003ZM10 18.556a8.508 8.508 0 0 1-5.243-1.8 11.717 11.717 0 0 1 6.7-5.332.509.509 0 0 1 .055-.02 35.65 35.65 0 0 1 1.819 6.476 8.476 8.476 0 0 1-3.331.676Zm4.772-1.462A37.232 37.232 0 0 0 13.113 11a12.513 12.513 0 0 1 5.321.364 8.56 8.56 0 0 1-3.66 5.73h-.002Z"
-                  clip-rule="evenodd"
+                
+                <path 
+                fill-rule="evenodd"
+                d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" 
+                 clip-rule="evenodd"
                 />
               </svg>
-              <span className="sr-only">Dribbble account</span>
+              <span className="sr-only">Tiktok account</span>
             </a>
           </div>
         </div>

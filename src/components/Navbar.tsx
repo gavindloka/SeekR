@@ -170,9 +170,9 @@ export function Navbar() {
           >
             Log in
           </Button>
-          <Button className="bg-lime-500" onClick={() => navigate("/register")}>
+          {/* <Button className="bg-lime-500" onClick={() => navigate("/register")}>
             Register
-          </Button>
+          </Button> */}
         </NavigationMenuList>
       )}
     </NavigationMenu>
